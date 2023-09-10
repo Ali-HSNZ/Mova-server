@@ -5,7 +5,7 @@ const MovieSchema = new Schema(
     {
         title: { type: String, required: true },
         budget: { type: String },
-        image: { type: String, default: '/default/movie.jpg' },
+        image: { type: String, default: 'http://localhost:5000/default/movie.jpg' },
         overview: { type: String },
         popularity: { type: String },
         release_date: { type: String },

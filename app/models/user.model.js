@@ -6,10 +6,10 @@ const UserSchema = new Schema(
         email: { type: String, unique: true },
         password: { type: String },
         mobile: { type: String },
-        gender: { type: String, default: 'male' },
+        gender: { type: String, default: 'unknown' },
         favorite: { type: [mongoose.Types.ObjectId], default: [] },
         interest: { type: [String], default: [] },
-        vector: { type: String, default: '/default/user.png' },
+        vector: { type: String, default: 'http://localhost:5000/default/user.png' },
         role: { type: [String], default: ['USER'] },
         token: { type: String, default: '' }
     },

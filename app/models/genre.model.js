@@ -1,6 +1,6 @@
-const { Schema, model, default: mongoose } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-export const GenreSchema = new Schema(
+const GenreSchema = new Schema(
     {
         name: { type: String, required: true }
     },
