@@ -1,3 +1,5 @@
+const { allRoutes } = require('./routers/router');
+
 module.exports = class Application {
     #express = require('express');
     #app = this.#express();
@@ -24,6 +26,7 @@ module.exports = class Application {
     }
     configDB(DB_URL) {
         const mongoose = require('mongoose');
+        mongoose.set('strictQuery', true);
         mongoose.connect(DB_URL, (error) => {
             if (error) throw error;
             return console.log('Connected to DB :)');
@@ -45,15 +48,13 @@ module.exports = class Application {
             return res.status(status).json({
                 status,
                 success: false,
+                invalidParams: error?.error,
+
                 message
             });
         });
     }
     createRoutes() {
-        this.#app.get('/', (req, res, next) => {
-            return res.json({
-                message: 'this is a new Express Aplication'
-            });
-        });
+        this.#app.use(allRoutes);
     }
 };
