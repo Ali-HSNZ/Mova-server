@@ -5,12 +5,13 @@ const UserSchema = new Schema(
         nickName: { type: String },
         email: { type: String, unique: true },
         password: { type: String },
-        mobile: { type: String},
+        mobile: { type: String },
         gender: { type: String, default: 'male' },
         favorite: { type: [mongoose.Types.ObjectId], default: [] },
         interest: { type: [String], default: [] },
         vector: { type: String, default: '/default/user.png' },
-        role: { type: [String], default: ['USER'] }
+        role: { type: [String], default: ['USER'] },
+        token: { type: String, default: '' }
     },
     {
         timestamps: true

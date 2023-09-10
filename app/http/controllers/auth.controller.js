@@ -1,8 +1,39 @@
 const { UserModel } = require('../../models/user.model');
 const { hashString } = require('../../modules/hashString');
+const bcrypt = require('bcrypt');
+const { tokenGenerator } = require('../../modules/tokenGenerator');
 
 class AuthController {
-    login() {}
+    async login(req, res, next) {
+        try {
+            const { email, password } = req.body;
+            const user = await UserModel.findOne({ email });
+            if (!user) {
+                throw {
+                    status: 401,
+                    message: 'ایمیل یا رمز عبور اشتباه می باشد'
+                };
+            }
+            const compareResult = bcrypt.compareSync(password, user.password);
+            if (!compareResult) {
+                throw {
+                    status: 401,
+                    message: 'ایمیل یا رمز عبور اشتباه می باشد'
+                };
+            }
+            const token = tokenGenerator({ email });
+            user.token = token;
+            await user.save();
+            return res.status(200).json({
+                status: 200,
+                success: true,
+                message: 'شما با موفقیت وارد حساب کاربری شده‌اید',
+                token
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
     async register(req, res, next) {
         try {
             const { email, password } = req.body;
@@ -23,15 +54,6 @@ class AuthController {
                 success: true,
                 data: user
             });
-        } catch (error) {
-            next(error);
-        }
-    }
-    async delete(req, res, next) {
-        try {
-            const { id } = req.params;
-            const user = await UserModel.deleteOne({ _id: id });
-            res.json(user);
         } catch (error) {
             next(error);
         }
