@@ -10,7 +10,7 @@ function checkValidation(req, res, next) {
         throw {
             status: 400,
             error: obj,
-            message: 'validation Error'
+            message: 'خطای اعتبارسنجی'
         };
     } else {
         next();
