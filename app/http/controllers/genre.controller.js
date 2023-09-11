@@ -7,7 +7,7 @@ class GenreController {
     async getAll(req, res, next) {
         const result = await GenreModel.find({}, { createdAt: 0, updatedAt: 0, __v: 0 });
         res.json({
-            status: 201,
+            status: 200,
             success: true,
             data: result
         });

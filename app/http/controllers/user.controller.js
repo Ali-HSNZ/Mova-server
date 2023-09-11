@@ -1,3 +1,4 @@
+const { isValidObjectId } = require('mongoose');
 const { GenreModel } = require('../../models/genre.model');
 const { UserModel } = require('../../models/user.model');
 
@@ -20,23 +21,29 @@ class UserController {
         try {
             const { interest } = req.body;
 
-            const allGenre = await GenreModel.find({}, { createdAt: 0, updatedAt: 0, __v: 0 });
-            const matchedGenre = interest.every((inter) => allGenre.some((obj) => obj.name === inter));
-            if (!matchedGenre) {
-                return res.json({
-                    status: 400,
-                    success: false,
-                    message: 'ژانرهای وارد شده معتبر نیستند'
-                });
-            }
-            const { email } = req.user;
-            const user = await UserModel.updateOne({ email }, { $set: { interest } });
+            interest.forEach((id) => {
+                if (!isValidObjectId(id)) {
+                    throw {
+                        status: 400,
+                        success: false,
+                        message: 'شناسه وارد شده معتبر نیست'
+                    };
+                }
+            });
 
-            if (user?.modifiedCount >= 0) {
+            const allGenre = await GenreModel.find({ _id: interest }, { createdAt: 0, updatedAt: 0, __v: 0 });
+ 
+            const { email } = req.user;
+
+            const getAllGenresName = allGenre.map((genre) => genre.name);
+            const user = await UserModel.updateOne({ email }, { $set: { interest: getAllGenresName } });
+
+            if (user?.modifiedCount > 0) {
                 return res.json({
                     status: 201,
                     success: true,
-                    message: 'ژانر های موردعلاقه شما با موفقیت ثبت شدند'
+                    updated: getAllGenresName,
+                    message: `ژانر های  مورد علاقه شما با موفقیت ثبت شدند`
                 });
             }
             throw {
