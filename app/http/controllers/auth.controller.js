@@ -38,9 +38,11 @@ class AuthController {
         try {
             const { email, password } = req.body;
             const hashedPassword = hashString(password);
+            const token = tokenGenerator({ email });
             const user = await UserModel.create({
                 email,
-                password: hashedPassword
+                password: hashedPassword,
+                token
             }).catch((err) => {
                 if (err?.code == 11000) {
                     throw {
@@ -49,6 +51,8 @@ class AuthController {
                     };
                 }
             });
+            user.vector = req.protocol + '://' + req.get('host') + '/' + user.vector.replace(/\\/g, '/');
+
             res.json({
                 status: 201,
                 success: true,
