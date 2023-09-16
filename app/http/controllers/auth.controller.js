@@ -47,6 +47,7 @@ class AuthController {
                 if (err?.code == 11000) {
                     throw {
                         status: 422,
+                        success: false,
                         message: 'ایمیل قبلا در سیستم ثبت شده است'
                     };
                 }

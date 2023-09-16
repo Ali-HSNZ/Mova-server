@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     // تغییر نام فایل
     filename: (req, file, cb) => {
         const imageType = path.extname(file.originalname || '');
-        cb(null, 'user_' + Date.now() + imageType);
+        cb(null, Date.now() + imageType);
     }
 });
 const upload = multer({
