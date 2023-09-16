@@ -19,6 +19,16 @@ function updateProfile() {
             }
             return true;
         }),
+        body('role').custom((value) => {
+            const roles = ['USER', 'ADMIN'];
+            if (value) {
+                if (roles.includes(value)) {
+                    return true;
+                }
+                throw 'سطح دسترسی وارد شده معتبر نیست';
+            }
+            return true;
+        }),
         body('mobile').custom((value) => {
             if (value) {
                 if (value.match(/^(\+98|0)?9\d{9}$/g)) {

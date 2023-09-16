@@ -9,7 +9,7 @@ const UserSchema = new Schema(
         favorite: { type: [mongoose.Types.ObjectId], default: [] },
         interest: { type: [String], default: [] },
         vector: { type: String, default: 'default/user.png' },
-        role: { type: [String], default: ['USER'] },
+        role: { type: String, default: 'USER' },
         token: { type: String, default: '' }
     },
     {

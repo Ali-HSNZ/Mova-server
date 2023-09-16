@@ -27,7 +27,7 @@ function create() {
             return true;
         }),
 
-        body('roles').custom((value) => {
+        body('role').custom((value) => {
             if (value) {
                 const toParseValue = JSON.parse(value);
                 const keys = ['movieId', 'characterName'];

@@ -63,7 +63,7 @@ class UserController {
             const data = req.body;
             data['vector'] = vector;
 
-            let fields = ['fullName', 'mobile', 'gender', 'vector'];
+            let fields = ['fullName', 'mobile', 'gender', 'vector', 'role'];
             let badValues = [' ', '', null, undefined, 0, -1, NaN];
 
             Object.entries(data).forEach(([key, value]) => {
@@ -90,7 +90,18 @@ class UserController {
         }
     }
     create() {}
-    remove() {}
+    async removeAll(req, res, next) {
+        try {
+            await UserModel.deleteMany({});
+            res.json({
+                status: 200,
+                success: true,
+                message: 'کاربران با موفقیت حذف شده‌اند'
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
     getAll() {}
 }
 module.exports = {

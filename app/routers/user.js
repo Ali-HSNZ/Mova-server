@@ -7,6 +7,7 @@ const { upload } = require('../modules/multer');
 const router = require('express').Router();
 
 router.get('/profile', checkLogin, UserController.getProfile);
+router.delete('/removeAll', checkLogin, UserController.removeAll);
 router.post('/interest', checkLogin, interestValidation(), checkValidation, UserController.chooseInterest);
 router.post(
     '/update-profile',
