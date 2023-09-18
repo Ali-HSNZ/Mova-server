@@ -1,21 +1,22 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 
 const MovieSchema = new Schema(
     {
         title: { type: String, required: true },
-        movieId: { type: String, required: true },
-        trailerId: { type: String, required: false },
+        quality: { type: String },
+        movie: { type: String, default: 'default/movie.jpg' },
+        banner: { type: String, default: 'default/movie.jpg' },
+        trailer: { type: String, default: 'default/movie.jpg' },
         budget: { type: String },
-        image: { type: String, default: 'default/movie.jpg' },
         overview: { type: String },
         popularity: { type: String },
         release_date: { type: String },
         status: { type: String },
-        tags: { type: [mongoose.Types.ObjectId] },
-        age_range: { type: String },
-        country: { type: String },
-        cast: { type: [mongoose.Types.ObjectId] },
-        genre: { type: [mongoose.Types.ObjectId] }
+        tags: { type: [String], required: true },
+        age_range: { type: String, required: true },
+        country: { type: String, required: true },
+        casts: { type: [mongoose.Types.ObjectId], required: true },
+        genre: { type: [mongoose.Types.ObjectId], required: true }
     },
     {
         timestamps: true

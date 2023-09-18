@@ -3,6 +3,8 @@
     "scm.diffDecorationsIgnoreTrimWhitespace": "true",
     "files.trimTrailingWhitespace": true,
 
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
     // eslint extension options
     "eslint.enable": true,
     "eslint.validate": ["javascript", "typescript"],

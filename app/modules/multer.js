@@ -14,18 +14,18 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({
-    storage,
-    fileFilter: function (req, file, cb) {
-        const isImageType = file.mimetype.startsWith('image/');
-        if (isImageType) {
-            cb(null, true);
-        } else {
-            cb(new Error('فرمت عکس معتبر نیست'), false);
-        }
-    },
-    limits: {
-        fileSize: 10 * 1024 * 1024 // 10MB
-    }
+    storage
+    // fileFilter: function (req, file, cb) {
+    //     const isImageType = file.mimetype.startsWith('image/');
+    //     if (isImageType) {
+    //         cb(null, true);
+    //     } else {
+    //         cb(new Error('فرمت عکس معتبر نیست'), false);
+    //     }
+    // },
+    // limits: {
+    //     fileSize: 10 * 1024 * 1024 // 10MB
+    // }
 });
 
 module.exports = {
