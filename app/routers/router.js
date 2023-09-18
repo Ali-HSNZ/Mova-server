@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const { authRoute } = require('./auth');
 const { castRoute } = require('./cast');
+const { commentRoute } = require('./comments');
 const { genreRoute } = require('./genre');
 const { movieRoute } = require('./movie');
 const { userRoute } = require('./user');
@@ -13,6 +14,7 @@ router.use('/api/movie', movieRoute);
 router.use('/api/genre', genreRoute);
 router.use('/api/auth', authRoute);
 router.use('/api/video', videoRoute);
+router.use('/api/comment', commentRoute);
 
 module.exports = {
     allRoutes: router

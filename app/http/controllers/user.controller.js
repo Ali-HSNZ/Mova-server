@@ -3,9 +3,19 @@ const { GenreModel } = require('../../models/genre.model');
 const { UserModel } = require('../../models/user.model');
 
 class UserController {
-    getProfile(req, res, next) {
+    async getProfile(req, res, next) {
         try {
-            const user = req.user;
+            const user = await UserModel.findById(req.user._id)
+                .populate({
+                    path: 'comments',
+                    select: 'text likes movie dislikes _id',
+                    populate: {
+                        path: 'movie',
+                        select: 'title banner' // فیلدهای مورد نظر برای مدل فیلم
+                    }
+                })
+                .lean();
+
             user.vector = req.protocol + '://' + req.get('host') + '/' + user.vector.replace(/\\/g, '/');
             return res.json({
                 status: 200,

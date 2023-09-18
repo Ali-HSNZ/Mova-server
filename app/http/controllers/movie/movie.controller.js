@@ -3,6 +3,7 @@ const fs = require('fs');
 const { hostConfigs } = require('../../../configs/ftp');
 const { MovieModel } = require('../../../models/movie.model');
 const { movieMethods } = require('./methods');
+const { isValidObjectId } = require('mongoose');
 class MovieController {
     create(req, res, next) {
         try {
@@ -124,7 +125,62 @@ class MovieController {
     }
     search() {}
     remove() {}
+    async removeAll(req, res, next) {
+        try {
+            await MovieModel.deleteMany({});
+            res.json({
+                status: 200,
+                success: true,
+                message: 'فیلم ها با موفقیت حذف شده‌اند'
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
     update() {}
+    async detail(req, res, next) {
+        try {
+            const { id } = req.params;
+            if (!isValidObjectId(id)) {
+                res.send({
+                    status: 404,
+                    success: false,
+                    message: 'شناسه فیلم نامعتبر است'
+                });
+            }
+            const result = await MovieModel.findById(id)
+                .populate({
+                    path: 'comments',
+                    select: 'user likes dislikes text parentComment',
+                    populate: {
+                        path: 'user',
+                        select: 'email vector fullName'
+                    }
+                })
+                .populate({
+                    path: 'casts',
+                    select: 'fullName vector'
+                })
+                .populate({
+                    path: 'genre',
+                    select: 'name'
+                });
+            if (!result) {
+                res.send({
+                    status: 404,
+                    success: false,
+                    message: 'فیلم یافت نشد'
+                });
+            }
+            res.send({
+                status: 200,
+                success: true,
+                data: result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
     async getAll(req, res, next) {
         const result = await MovieModel.find({});
         res.send({

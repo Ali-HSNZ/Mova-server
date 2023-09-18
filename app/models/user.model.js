@@ -10,7 +10,8 @@ const UserSchema = new Schema(
         interest: { type: [String], default: [] },
         vector: { type: String, default: 'default/user.png' },
         role: { type: String, default: 'USER' },
-        token: { type: String, default: '' }
+        token: { type: String, default: '' },
+        comments: { type: [mongoose.Types.ObjectId], ref: 'comment' }
     },
     {
         timestamps: true

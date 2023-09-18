@@ -15,8 +15,9 @@ const MovieSchema = new Schema(
         tags: { type: [String], required: true },
         age_range: { type: String, required: true },
         country: { type: String, required: true },
-        casts: { type: [mongoose.Types.ObjectId], required: true },
-        genre: { type: [mongoose.Types.ObjectId], required: true }
+        casts: { type: [mongoose.Types.ObjectId], required: true, ref: 'cast' },
+        genre: { type: [mongoose.Types.ObjectId], required: true, ref: 'genre' },
+        comments: { type: [mongoose.Types.ObjectId], ref: 'comment', default: [] }
     },
     {
         timestamps: true

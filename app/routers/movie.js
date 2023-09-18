@@ -20,6 +20,8 @@ router.post(
     MovieController.create
 );
 router.get('/list', checkLogin, checkRole('admin'), MovieController.getAll);
+router.get('/detail/:id', checkLogin, checkRole('admin'), MovieController.detail);
+router.delete('/removeAll', checkLogin, checkRole('admin'), MovieController.removeAll);
 module.exports = {
     movieRoute: router
 };
