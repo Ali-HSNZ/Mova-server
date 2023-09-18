@@ -182,7 +182,23 @@ class MovieController {
         }
     }
     async getAll(req, res, next) {
-        const result = await MovieModel.find({});
+        const result = await MovieModel.find({})
+            .populate({
+                path: 'comments',
+                select: 'user likes dislikes text parentComment',
+                populate: {
+                    path: 'user',
+                    select: 'email vector fullName'
+                }
+            })
+            .populate({
+                path: 'casts',
+                select: 'fullName vector'
+            })
+            .populate({
+                path: 'genre',
+                select: 'name'
+            });
         res.send({
             status: 200,
             success: true,

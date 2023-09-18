@@ -84,6 +84,118 @@ class CommentController {
             data: result
         });
     }
+    async like(req, res, next) {
+        try {
+            const { id } = req.params;
+            if (!isValidObjectId(id)) {
+                throw {
+                    status: 401,
+                    success: false,
+                    message: 'ثبت لایک با شکست مواجه شد'
+                };
+            }
+            const comment = await CommentModel.findOne({ _id: id, user: req.user._id });
+            if (!comment) {
+                throw {
+                    status: 404,
+                    success: false,
+                    message: 'کامنت یافت نشد'
+                };
+            }
+            await comment.like();
+            res.status(201).send({
+                status: 201,
+                success: true,
+                message: 'عملیات با موفقیت انجام شد'
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+    async undoLike(req, res, next) {
+        try {
+            const { id } = req.params;
+            if (!isValidObjectId(id)) {
+                throw {
+                    status: 401,
+                    success: false,
+                    message: 'حذف لایک با شکست مواجه شد'
+                };
+            }
+            const comment = await CommentModel.findOne({ _id: id, user: req.user._id });
+            if (!comment) {
+                throw {
+                    status: 404,
+                    success: false,
+                    message: 'کامنت یافت نشد'
+                };
+            }
+            await comment.undoLike();
+            res.status(201).send({
+                status: 201,
+                success: true,
+                message: 'عملیات با موفقیت انجام شد '
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+    async disLike(req, res, next) {
+        try {
+            const { id } = req.params;
+            if (!isValidObjectId(id)) {
+                throw {
+                    status: 401,
+                    success: false,
+                    message: 'ثبت دیس‌لایک با شکست مواجه شد'
+                };
+            }
+            const comment = await CommentModel.findOne({ _id: id, user: req.user._id });
+            if (!comment) {
+                throw {
+                    status: 404,
+                    success: false,
+                    message: 'کامنت یافت نشد'
+                };
+            }
+            await comment.dislike();
+            res.status(201).send({
+                status: 201,
+                success: true,
+                message: 'عملیات با موفقیت انجام شد'
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+    async undoDisLike(req, res, next) {
+        try {
+            const { id } = req.params;
+            if (!isValidObjectId(id)) {
+                throw {
+                    status: 401,
+                    success: false,
+                    message: 'حذف دیس‌لایک با شکست مواجه شد'
+                };
+            }
+            const comment = await CommentModel.findOne({ _id: id, user: req.user._id });
+            if (!comment) {
+                throw {
+                    status: 404,
+                    success: false,
+                    message: 'کامنت یافت نشد'
+                };
+            }
+            await comment.undoDislike();
+            res.status(201).send({
+                status: 201,
+                success: true,
+                message: 'عملیات با موفقیت انجام شد'
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
     async removeAll(req, res, next) {
         await CommentModel.deleteMany({});
         res.send({
