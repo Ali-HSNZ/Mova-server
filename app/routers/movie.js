@@ -13,7 +13,7 @@ router.post(
     upload.fields([
         { name: 'movie', maxCount: 1 },
         { name: 'banner', maxCount: 1 },
-        { name: 'trailer', maxCount: 1 }
+        { name: 'trailer', maxCount: 10 }
     ]),
     createMovieValidation(),
     checkValidation,
@@ -22,6 +22,7 @@ router.post(
 router.get('/list', checkLogin, checkRole('admin'), MovieController.getAll);
 router.get('/detail/:id', checkLogin, checkRole('admin'), MovieController.detail);
 router.delete('/removeAll', checkLogin, checkRole('admin'), MovieController.removeAll);
+
 module.exports = {
     movieRoute: router
 };

@@ -51,7 +51,15 @@ class CommentController {
                     message: 'شناسه نظر نامعتبر است'
                 });
             }
-            const result = await CommentModel.findById(id);
+            const result = await CommentModel.findById(id)
+                .populate({
+                    path: 'user',
+                    select: 'email fullName gender vector'
+                })
+                .populate({
+                    path: 'movie',
+                    select :"title quality banner status"
+                });
             if (!result) {
                 res.send({
                     status: 404,
@@ -76,7 +84,7 @@ class CommentController {
             })
             .populate({
                 path: 'movie',
-                select: 'title banner'
+                select: 'title quality banner status'
             });
         res.send({
             status: 200,

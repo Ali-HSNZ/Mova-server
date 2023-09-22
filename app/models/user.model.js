@@ -11,6 +11,7 @@ const UserSchema = new Schema(
         vector: { type: String, default: 'default/user.png' },
         role: { type: String, default: 'USER' },
         token: { type: String, default: '' },
+        watchList: { type: [mongoose.Types.ObjectId], ref: 'movie', default: [] },
         comments: { type: [mongoose.Types.ObjectId], ref: 'comment' }
     },
     {

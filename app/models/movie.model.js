@@ -11,6 +11,7 @@ const MovieSchema = new Schema(
         overview: { type: String },
         popularity: { type: String },
         release_date: { type: String },
+        awards: { type: [String], default: [] },
         status: { type: String },
         tags: { type: [String], required: true },
         age_range: { type: String, required: true },
