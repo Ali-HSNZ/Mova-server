@@ -12,7 +12,8 @@ const UserSchema = new Schema(
         role: { type: String, default: 'USER' },
         token: { type: String, default: '' },
         watchList: { type: [mongoose.Types.ObjectId], ref: 'movie', default: [] },
-        comments: { type: [mongoose.Types.ObjectId], ref: 'comment' }
+        comments: { type: [mongoose.Types.ObjectId], ref: 'comment' },
+        recent: { type: [mongoose.Schema.Types.ObjectId], default: [], ref: 'movie' }
     },
     {
         timestamps: true

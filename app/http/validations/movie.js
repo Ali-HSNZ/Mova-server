@@ -12,6 +12,15 @@ function create() {
             }
             throw 'نام فیلم اجباری می‌باشد';
         }),
+        body('vote').custom((value) => {
+            if (value) {
+                if (Number(value) >= 1 && Number(value) <= 6) {
+                    return true;
+                }
+                throw 'امتیاز وارد شده باید بین 1 تا 6 باشد';
+            }
+            return true;
+        }),
         body('quality').custom((value) => {
             if (value) {
                 const qualities = ['320', '480', '720', '1080', '1440'];

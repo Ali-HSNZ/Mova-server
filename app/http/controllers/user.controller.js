@@ -14,7 +14,14 @@ class UserController {
                         select: 'title banner' // فیلدهای مورد نظر برای مدل فیلم
                     }
                 })
-                .lean();
+                .populate({
+                    path: 'watchList',
+                    select: 'title banner status awards vote'
+                })
+                .populate({
+                    path: 'recent',
+                    select: 'title quality banner '
+                });
 
             user.vector = req.protocol + '://' + req.get('host') + '/' + user.vector.replace(/\\/g, '/');
             return res.json({

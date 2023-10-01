@@ -27,7 +27,7 @@ class GeneralController {
                     throw {
                         status: 200,
                         success: false,
-                        message: 'فیلم یا سریال از قبل در سیستم وجود دارد'
+                        message: 'فیلم یا سریال در پنل کاربری وجود دارد'
                     };
                 }
                 user.watchList.push(movieId);

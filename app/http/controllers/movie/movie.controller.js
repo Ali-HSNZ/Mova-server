@@ -4,6 +4,7 @@ const { hostConfigs } = require('../../../configs/ftp');
 const { MovieModel } = require('../../../models/movie.model');
 const { movieMethods } = require('./methods');
 const { isValidObjectId } = require('mongoose');
+const { UserModel } = require('../../../models/user.model');
 class MovieController {
     create(req, res, next) {
         try {
@@ -172,6 +173,13 @@ class MovieController {
                     message: 'فیلم یافت نشد'
                 });
             }
+            // Add to Recent List in User Model
+            const user = await UserModel.findById(req.user._id);
+            if (!user.recent.includes(id)) {
+                user.recent.push(id);
+                await user.save();
+            }
+
             res.send({
                 status: 200,
                 success: true,
